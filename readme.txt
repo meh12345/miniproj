@@ -1,1 +1,1 @@
-this is mimi project.
+DOCUMENT COMPARISON AND SEARCHING
