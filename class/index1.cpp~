@@ -1,0 +1,73 @@
+class index1
+{
+private:
+int maxwordlen; 
+char ** upload;
+int i;
+public :
+	index1()
+	{
+	maxwordlen=0;
+	upload=(char **)malloc(sizeof(char *)*1000);
+	for(i=0;i<1000;i++)
+	{
+	upload[i]=(char *)malloc(sizeof(char)*100); 
+	}
+	}
+
+	char ** makeindex(stopword s1, char *filename,char *mode)
+	{
+		char temp[120],ch;
+		int j;
+		j=0;
+		file f1(filename,mode);
+		while(1)
+		{
+		ch=f1.fgetc();
+		if(ch==EOF)
+		{	
+		break;
+		}
+		if(ch!=' ')
+		{
+		temp[j]=ch;
+		j++;
+		}
+		else
+		{
+		temp[j]='\0';
+		if(!s1.comparestopword(temp))
+		{
+		strcpy(upload[maxwordlen],temp);
+		//printf("%s\n",upload[maxwordlen]);
+		maxwordlen++;
+		}
+		j=0;
+		}
+		}		
+
+
+	return upload;
+	
+	}
+	int getmaxwordlen()
+	{
+	return maxwordlen;
+	}
+	
+	upload1(char * filename , char *mode)
+	{
+	int i;	
+	file f3("baseindex.txt","w");
+	if(f3.getfilepointer()==NULL)
+	{
+	printf("unable to open file for writing\n");
+	}
+	for(i=0;i<maxwordlen;i++)
+	{
+	f3.fputs(upload[i]);
+	f3.fputs("\n");
+	} 	 	
+	}
+};
+

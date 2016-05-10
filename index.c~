@@ -18,8 +18,7 @@ FILE *fp;
 for(i=0;i<maxfiles;i++)
 {
 str[i]=(char *)malloc(sizeof(char)*100); 
-} 
-//printf("dfdf");
+}
 fp=popen("ls ./files/ | cut -c-100","r");
 if(fp==NULL)
 {
@@ -29,17 +28,19 @@ exit(0);
 total=0;
 while(fgets(str[total],sizeof(str[total])-1,fp)!=NULL)
 {
+if(strcmp(str[total],"\n")!=0)
+{
 len1=strlen(str[total]);
 if(str[total][len1-1]=='\n')
 {
 str[total][len1-1]='\0';
 }
-printf("%s",str[total]);
+//printf("%s",str[total]);
 total++;
+}	
 }
-printf("%d",total);
+//printf("%d",total);
 pclose(fp);
-
 // this part will keep a list  of the stop words that we will keep a track in a document as not to process them 
 j=0;
 fp=fopen("stopwords.txt","r");
@@ -96,29 +97,31 @@ i++;
 if(check==0)
 {
 strcpy(upload[maxwordlen],temp);
-//printf("%s\n",upload[maxwordlen]);
 maxwordlen++;
 }
 j=0;
 }
 }
 //ends here
-sprintf(str1,"index%d.txt",k);
+
+// make a index file here
+//sprintf(str1,"index%d.txt",k);
 strcpy(copy,"./index/");
-strcat(copy,str1);
-fp=fopen(str1,"w");
+strcat(copy,str[k]);
+fp=fopen(copy,"w");
 if(fp==NULL)
 {
 printf("can not open file");
 }
 for(i=0;i<maxwordlen;i++)
 {
-fputs(upload[i],fp);
+fputs(upload[i],fp);   // write indexes for a file
 fputs("\n",fp);
 }
 fclose(fp);
 k++;
 }
+
 return 0;
 }
 
